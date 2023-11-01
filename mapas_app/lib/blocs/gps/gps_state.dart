@@ -1,8 +1,9 @@
 part of 'gps_bloc.dart';
 
 class GpsState extends Equatable {
-  final bool isGpsEnabled;
-  final bool isGpsPermissionGranted;
+  final bool isGpsEnabled; // Variable para ver si esta habilitado el GPS
+  final bool
+      isGpsPermissionGranted; // Variable para ver si tenemos permisos de utilizar el gps
 
   bool get isAllGranted => isGpsEnabled && isGpsPermissionGranted;
 

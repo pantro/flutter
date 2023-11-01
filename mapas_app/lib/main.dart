@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mapas_app/blocs/gps/gps_bloc.dart';
-import 'package:mapas_app/screens/gps_access_screen.dart';
+
+import 'package:mapas_app/blocs/bloc.dart';
 import 'package:mapas_app/screens/screens.dart';
 
 void main() {
-  runApp(MultiBlocProvider(
-      providers: [BlocProvider(create: (context) => GpsBloc())],
-      child: const MyApp()));
+  runApp(MultiBlocProvider(providers: [
+    BlocProvider(create: (context) => GpsBloc()),
+    BlocProvider(create: (context) => LocationBloc())
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
