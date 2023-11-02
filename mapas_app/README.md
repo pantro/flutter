@@ -11,3 +11,11 @@ A new Flutter project.
 - flutter pub add geolocator
 - flutter pub add permission_handler
 - flutter pub add google_maps_flutter
+
+
+## Commit
+- 
+- 
+- Se creo un controlador para en mapa de googlemaps, se puso un nuevo tema al mapa, 
+
+
