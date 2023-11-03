@@ -5,7 +5,7 @@ class CustomSnackBar extends SnackBar {
     Key? key,
     required String message,
     String btnLabel = 'OK',
-    Duration duration = const Duration(seconds: 2),
+    Duration duration = const Duration(seconds: 3),
     VoidCallback? onOk,
   }) : super(
             key: key,

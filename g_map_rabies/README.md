@@ -18,5 +18,6 @@ A new Flutter project.
 - Se creo un controlador para en mapa de googlemaps, se puso un nuevo tema al mapa
 - ...
 - Seguir al usuario con el mapa.
+- Se creo boton para poder obtener el gps y almacenarlo.
 
 

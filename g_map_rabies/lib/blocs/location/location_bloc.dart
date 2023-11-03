@@ -12,14 +12,21 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
   StreamSubscription? positionStream;
 
   LocationBloc() : super(const LocationState()) {
-
-    on<OnStartFollowingUser>(((event, emit) => emit(state.copyWith(followingUser: true))));
-    on<OnStopFollowingUser>(((event, emit) => emit(state.copyWith(followingUser: false))));
+    on<OnStartFollowingUser>(
+        ((event, emit) => emit(state.copyWith(followingUser: true))));
+    on<OnStopFollowingUser>(
+        ((event, emit) => emit(state.copyWith(followingUser: false))));
 
     on<OnNewUserLocationEvent>((event, emit) {
       emit(state.copyWith(
         lastKnownLocation: event.newLocation,
-        myLocationHistory: [ ...state.myLocationHistory, event.newLocation],
+        myLocationHistory: [...state.myLocationHistory, event.newLocation],
+      ));
+    });
+
+    on<OnNewSaveLocationEvent>((event, emit) {
+      emit(state.copyWith(
+        myLocationSave: [...state.myLocationSave, event.newSaveLocation],
       ));
     });
   }
@@ -30,13 +37,19 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
     add(OnNewUserLocationEvent(LatLng(position.latitude, position.longitude)));
   }
 
+  Future getCurrentPositionSave() async {
+    final position = await Geolocator.getCurrentPosition();
+    print('getCurrentPositionSave');
+    add(OnNewSaveLocationEvent(LatLng(position.latitude, position.longitude)));
+  }
+
   void startFollowingUser() {
-    
     add(OnStartFollowingUser());
 
     positionStream = Geolocator.getPositionStream().listen((event) {
       final position = event;
-      add(OnNewUserLocationEvent(LatLng(position.latitude, position.longitude)));
+      add(OnNewUserLocationEvent(
+          LatLng(position.latitude, position.longitude)));
     });
   }
 
