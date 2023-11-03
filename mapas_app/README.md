@@ -13,9 +13,10 @@ A new Flutter project.
 - flutter pub add google_maps_flutter
 
 
-## Commit
-- 
-- 
-- Se creo un controlador para en mapa de googlemaps, se puso un nuevo tema al mapa, 
+## Commit (ALgunos commit realizados)
+- ... (significa una cantidad indeterminada de commit antes)
+- Se creo un controlador para en mapa de googlemaps, se puso un nuevo tema al mapa
+- ...
+- Seguir al usuario con el mapa.
 
 
