@@ -4,9 +4,15 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mapas_app/blocs/blocs.dart';
 
 class MapView extends StatelessWidget {
+  
   final LatLng initialLocation;
+  final Set<Polyline> polylines;
 
-  const MapView({Key? key, required this.initialLocation}) : super(key: key);
+  const MapView({
+    Key? key, 
+    required this.initialLocation,
+    required this.polylines,
+    }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,12 +32,11 @@ class MapView extends StatelessWidget {
         },
         child: GoogleMap(
           initialCameraPosition: initialCameraPosition,
-          compassEnabled:
-              false, //Aprece una brujula en la parte superior izquierda
+          compassEnabled: false, //Aprece una brujula en la parte superior izquierda
           myLocationEnabled: true, // Localizador de donde estoy actualmente
           zoomControlsEnabled: false, // Botones de zoom
-          myLocationButtonEnabled:
-              false, // Botones que aparecen que yo mismo hare despues
+          myLocationButtonEnabled: false, // Botones que aparecen que yo mismo hare despues
+          polylines: polylines,
 
           onMapCreated: (controller) =>
               mapBloc.add(OnMapInitialzedEvent(controller)),
