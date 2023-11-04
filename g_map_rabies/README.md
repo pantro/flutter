@@ -11,6 +11,8 @@ A new Flutter project.
 - flutter pub add geolocator
 - flutter pub add permission_handler
 - flutter pub add google_maps_flutter
+- flutter pub add path_provider
+- flutter pub add csv
 
 
 ## Commit (ALgunos commit realizados)
@@ -19,5 +21,8 @@ A new Flutter project.
 - ...
 - Seguir al usuario con el mapa.
 - Se creo boton para poder obtener el gps y almacenarlo.
+- G_MAP_RABIES: Adicionar boton para descargar csv pero aun sin funcionalidad.
+- G_MAP_RABIES: Se termino funcionalidad para descargar csv.
+
 
 

@@ -16,12 +16,14 @@ class BtnDownload extends StatelessWidget {
         backgroundColor: Colors.white,
         maxRadius: 25,
         child: IconButton(
+          iconSize: 30,
+          padding: const EdgeInsets.all(0),
           icon: const Icon(
-            Icons.system_update_alt_sharp ,
+            Icons.download,
             color: Colors.blue,
           ),
           onPressed: () {
-            //locationBloc.writeFileDownload("Texto de prueba que se tiene que grabar en el archivo");
+            locationBloc.exportCSV();
 
             final snack = CustomSnackBar(message: 'Se descargo el archivo con exito.');
             ScaffoldMessenger.of(context).showSnackBar(snack);

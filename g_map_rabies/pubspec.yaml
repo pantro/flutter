@@ -29,6 +29,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   bloc: ^8.1.2
+  csv: ^5.1.1
   cupertino_icons: ^1.0.2
   equatable: ^2.0.5
   flutter:
@@ -37,6 +38,7 @@ dependencies:
   geolocator: ^10.1.0
   google_maps_flutter: ^2.5.0
   mapbox_gl: ^0.16.0
+  path_provider: ^2.1.1
   permission_handler: ^11.0.1
 
 dev_dependencies:
