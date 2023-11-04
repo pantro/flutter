@@ -18,5 +18,5 @@ A new Flutter project.
 - Se creo un controlador para en mapa de googlemaps, se puso un nuevo tema al mapa
 - ...
 - Seguir al usuario con el mapa.
-- MAPAS_APP: polylines
-
+- MAPAS_APP: polylines, persigue el historial de lo que camina el usuario.
+- MAPAS_APP: Ocultar o mostrar ruta.

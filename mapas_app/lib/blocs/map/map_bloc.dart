@@ -22,9 +22,9 @@ class MapBloc extends Bloc<MapEvent, MapState> {
         (event, emit) => emit(state.copyWith(isFollowingUser: false)));
 
     on<UpdatePolylinesMap>(_onPolylineNewPoint);
+    on<OnToggleRoute>((event, emit) => emit(state.copyWith(showMyRoute: !state.showMyRoute)));
 
     locationBloc.stream.listen((locationState) {
-
       if (locationState.lastKnownLocation != null) {
         add(UpdatePolylinesMap(locationState.myLocationHistory));
       }
@@ -67,8 +67,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     final currentPolylines = Map<String, Polyline>.from(state.polylines);
     currentPolylines['myRoute'] = myRoute;
 
-    emit( state.copyWith(polylines: currentPolylines));
-
+    emit(state.copyWith(polylines: currentPolylines));
   }
 
   void moveCamera(LatLng newLocation) {
