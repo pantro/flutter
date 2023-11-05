@@ -25,10 +25,13 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     on<OnStopFollowingUserMap>(
         ((event, emit) => emit(state.copyWith(isFollowingUser: false))));
 
-    on<OnAddHouseMap>((event, emit) => emit(state.copyWith(showAddHouse: true)));
-    on<OnBackHouseMap>((event, emit) => emit(state.copyWith(showAddHouse: false)));
+    on<OnAddHouseMap>(
+        (event, emit) => emit(state.copyWith(showAddHouse: true)));
+    on<OnBackHouseMap>(
+        (event, emit) => emit(state.copyWith(showAddHouse: false)));
 
-    on<OnShowMarkersMap>((event, emit) => emit(state.copyWith(markers: event.markers)));
+    on<OnShowMarkersMap>(
+        (event, emit) => emit(state.copyWith(markers: event.markers)));
 
     locationStateSubscription = locationBloc.stream.listen((locationState) {
       if (!state.isFollowingUser) return; // SI no se sigue al usuario aqui no se hace nada
@@ -62,13 +65,18 @@ class MapBloc extends Bloc<MapEvent, MapState> {
   }
 
   Future drawMarkers(LatLng position) async {
+    final newId = state.markers.length;
+    
     final marker = Marker(
-      markerId: const MarkerId('marker'),
+      markerId: MarkerId('ID_$newId'),
       position: position,
+      infoWindow: InfoWindow(
+        title: 'ID $newId',
+      )
     );
 
-    final currentMarkers = Map<String, Marker>.from(state.markers);
-    currentMarkers['marker'] = marker;
+    final currentMarkers = Map<String, Marker>.from(state.markers);// Realizando una copia de lo que se tiene
+    currentMarkers['ID_$newId'] = marker;
 
     add(OnShowMarkersMap(currentMarkers));
   }
