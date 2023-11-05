@@ -14,3 +14,6 @@ class OnMapInitialzedEvent extends MapEvent {
 
 class OnStopFollowingUserMap extends MapEvent {}
 class OnStartFollowingUserMap extends MapEvent {}
+
+class OnAddHouseMap extends MapEvent {}
+class OnBackHouseMap extends MapEvent {}

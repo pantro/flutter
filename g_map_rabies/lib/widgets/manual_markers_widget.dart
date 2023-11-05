@@ -1,9 +1,30 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mapas_app/blocs/blocs.dart';
+import 'package:mapas_app/widgets/widgets.dart';
 
 class ManualMarker extends StatelessWidget {
   
   const ManualMarker({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    
+    return BlocBuilder<MapBloc, MapState>(
+      builder: (context, state) {
+        return state.showAddHouse
+        ? const _ManualMarkerBody()
+        : const BtnAddHouse();
+      }
+    );
+  }
+
+}
+
+class _ManualMarkerBody extends StatelessWidget {
+
+  const _ManualMarkerBody({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +45,7 @@ class ManualMarker extends StatelessWidget {
           // Marcador central
           Center(
             child: Transform.translate(
-              offset: const Offset(-2, -20),
+              offset: const Offset(0, -20),
               child: BounceInDown(
                 from: 100,
                 child: const Icon(
@@ -58,16 +79,16 @@ class ManualMarker extends StatelessWidget {
       )
     );
   }
-
 }
 
 class _BtnBack extends StatelessWidget {
-  const _BtnBack({
-    Key? key,
-  }) : super(key: key);
+  const _BtnBack({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
+    final mapBloc = BlocProvider.of<MapBloc>(context);
+
     return FadeInLeft(
       duration: const Duration(milliseconds: 300),
       child: CircleAvatar(
@@ -79,7 +100,7 @@ class _BtnBack extends StatelessWidget {
             color: Colors.black,
           ),
           onPressed: (){
-            // To do
+            mapBloc.add(OnBackHouseMap());
           },
         ),
       ),

@@ -21,6 +21,9 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     on<OnMapInitialzedEvent>(_onInitMap);
     on<OnStartFollowingUserMap>(_onStartFollowingUser);
     on<OnStopFollowingUserMap>(((event, emit) => emit(state.copyWith(isFollowingUser: false))));
+
+    on<OnAddHouseMap>(((event, emit) => emit(state.copyWith(showAddHouse: true))));
+    on<OnBackHouseMap>(((event, emit) => emit(state.copyWith(showAddHouse: false))));
     
     locationStateSubscription = locationBloc.stream.listen((locationState) {
       if (!state.isFollowingUser) return; // SI no se sigue al usuario aqui no se hace nada
