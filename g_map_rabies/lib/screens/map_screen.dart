@@ -39,7 +39,8 @@ class _MapScreenState extends State<MapScreen> {
 
           return Stack(
             children: [
-              MapView(initialLocation: state.lastKnownLocation!)
+              MapView(initialLocation: state.lastKnownLocation!),
+              const ManualMarker(),
             ],
           );
           
