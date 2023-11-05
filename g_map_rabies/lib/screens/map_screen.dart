@@ -35,16 +35,21 @@ class _MapScreenState extends State<MapScreen> {
     
     return Scaffold(
       body: BlocBuilder<LocationBloc, LocationState>(
-        builder: (context, state) {
-          if ( state.lastKnownLocation == null ) return const Center( child: Text('Espere por favor ...'),);
+        builder: (context, locationState) {
+          if ( locationState.lastKnownLocation == null ) return const Center( child: Text('Espere por favor ...'),);
 
-          return Stack(
-            children: [
-              MapView(initialLocation: state.lastKnownLocation!),
-              const ManualMarker(),
-            ],
+          return BlocBuilder<MapBloc, MapState>(
+            builder: (context, mapState){
+              return SingleChildScrollView(
+                child: Stack(
+                  children: [
+                    MapView(initialLocation: locationState.lastKnownLocation!, markers: mapState.markers.values.toSet()),
+                    const ManualMarker(),
+                  ],
+                ),
+              );
+            }
           );
-          
         }
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,

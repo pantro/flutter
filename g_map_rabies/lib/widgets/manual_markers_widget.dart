@@ -30,6 +30,7 @@ class _ManualMarkerBody extends StatelessWidget {
   Widget build(BuildContext context) {
     
     final size = MediaQuery.of(context).size;
+    final mapBloc = BlocProvider.of<MapBloc>(context);
 
     return SizedBox(
       width: size.width,
@@ -68,8 +69,12 @@ class _ManualMarkerBody extends StatelessWidget {
                 color: Colors.black,
                 elevation: 0,
                 shape: const StadiumBorder(),
-                onPressed:() {
+                onPressed:() async {
+                  //Obtener posicion central
+                  final position = mapBloc.mapCenter;
+                  if (position == null) return;
 
+                  await mapBloc.drawMarkers(position);
                 },
                 child: const Text('Poner vivienda', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w300)),
               ),

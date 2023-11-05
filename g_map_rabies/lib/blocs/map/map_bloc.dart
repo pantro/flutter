@@ -15,16 +15,21 @@ class MapBloc extends Bloc<MapEvent, MapState> {
 
   GoogleMapController? _mapController;
 
+  LatLng? mapCenter;
+
   StreamSubscription<LocationState>? locationStateSubscription;
 
   MapBloc({required this.locationBloc}) : super(const MapState()) {
     on<OnMapInitialzedEvent>(_onInitMap);
     on<OnStartFollowingUserMap>(_onStartFollowingUser);
-    on<OnStopFollowingUserMap>(((event, emit) => emit(state.copyWith(isFollowingUser: false))));
+    on<OnStopFollowingUserMap>(
+        ((event, emit) => emit(state.copyWith(isFollowingUser: false))));
 
-    on<OnAddHouseMap>(((event, emit) => emit(state.copyWith(showAddHouse: true))));
-    on<OnBackHouseMap>(((event, emit) => emit(state.copyWith(showAddHouse: false))));
-    
+    on<OnAddHouseMap>((event, emit) => emit(state.copyWith(showAddHouse: true)));
+    on<OnBackHouseMap>((event, emit) => emit(state.copyWith(showAddHouse: false)));
+
+    on<OnShowMarkersMap>((event, emit) => emit(state.copyWith(markers: event.markers)));
+
     locationStateSubscription = locationBloc.stream.listen((locationState) {
       if (!state.isFollowingUser) return; // SI no se sigue al usuario aqui no se hace nada
 
@@ -43,7 +48,8 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     emit(state.copyWith(isMapInitialized: true));
   }
 
-  void _onStartFollowingUser ( OnStartFollowingUserMap event, Emitter<MapState> emit){
+  void _onStartFollowingUser(
+      OnStartFollowingUserMap event, Emitter<MapState> emit) {
     emit(state.copyWith(isFollowingUser: true));
 
     if (locationBloc.state.lastKnownLocation == null) return;
@@ -53,6 +59,18 @@ class MapBloc extends Bloc<MapEvent, MapState> {
   void moveCamera(LatLng newLocation) {
     final cameraUpdate = CameraUpdate.newLatLng(newLocation);
     _mapController?.animateCamera(cameraUpdate);
+  }
+
+  Future drawMarkers(LatLng position) async {
+    final marker = Marker(
+      markerId: const MarkerId('marker'),
+      position: position,
+    );
+
+    final currentMarkers = Map<String, Marker>.from(state.markers);
+    currentMarkers['marker'] = marker;
+
+    add(OnShowMarkersMap(currentMarkers));
   }
 
   @override

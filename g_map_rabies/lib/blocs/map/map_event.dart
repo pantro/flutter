@@ -17,3 +17,10 @@ class OnStartFollowingUserMap extends MapEvent {}
 
 class OnAddHouseMap extends MapEvent {}
 class OnBackHouseMap extends MapEvent {}
+
+class OnShowMarkersMap extends MapEvent {
+  
+  final Map<String, Marker> markers;
+
+  const OnShowMarkersMap(this.markers);
+}

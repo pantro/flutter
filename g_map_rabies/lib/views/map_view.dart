@@ -5,8 +5,13 @@ import 'package:mapas_app/blocs/blocs.dart';
 
 class MapView extends StatelessWidget {
   final LatLng initialLocation;
+  final Set<Marker> markers;
 
-  const MapView({Key? key, required this.initialLocation}) : super(key: key);
+  const MapView({
+    Key? key, 
+    required this.initialLocation,
+    required this.markers
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,15 +31,13 @@ class MapView extends StatelessWidget {
         },
         child: GoogleMap(
           initialCameraPosition: initialCameraPosition,
-          compassEnabled:
-              false, //Aprece una brujula en la parte superior izquierda
+          compassEnabled: false, //Aprece una brujula en la parte superior izquierda
           myLocationEnabled: true, // Localizador de donde estoy actualmente
           zoomControlsEnabled: false, // Botones de zoom
-          myLocationButtonEnabled:
-              false, // Botones que aparecen que yo mismo hare despues
-
-          onMapCreated: (controller) =>
-              mapBloc.add(OnMapInitialzedEvent(controller)),
+          myLocationButtonEnabled: false, // Botones que aparecen que yo mismo hare despues
+          markers: markers,
+          onMapCreated: (controller) => mapBloc.add(OnMapInitialzedEvent(controller)),
+          onCameraMove: (position) => mapBloc.mapCenter = position.target,
         ),
       ),
     );

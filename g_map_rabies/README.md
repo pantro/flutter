@@ -25,5 +25,5 @@ A new Flutter project.
 - G_MAP_RABIES: Se termino funcionalidad para descargar csv.
 - G_MAP_RABIES: Se agrego nuevos widgets como boton para regresar atras, marcador del centro y buton para guardar vivienda aun sin funcionalidad.
 - G_MAP_RABIES: Se le agrego funcion al boton de adiconar vivienda y al boton de retroceder.
-
+- G_MAP_RABIES: Se agrego un marcador en el mapa.
 
