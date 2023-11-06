@@ -27,3 +27,4 @@ A new Flutter project.
 - G_MAP_RABIES: Se le agrego funcion al boton de adiconar vivienda y al boton de retroceder.
 - G_MAP_RABIES: Se agrego un marcador en el mapa.
 - G_MAP_RABIES: Colocar muchos marcadores.
+- G_MAP_RABIES(v1.0): Generar un diseño de marcador personalizado, marcadores cambian de color.

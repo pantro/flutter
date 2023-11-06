@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:mapas_app/blocs/blocs.dart';
 import 'package:mapas_app/views/views.dart';
+import 'package:mapas_app/widgets/btn_visited_house_widget.dart';
 import 'package:mapas_app/widgets/widgets.dart';
 
 class MapScreen extends StatefulWidget {
@@ -45,6 +46,7 @@ class _MapScreenState extends State<MapScreen> {
                   children: [
                     MapView(initialLocation: locationState.lastKnownLocation!, markers: mapState.markers.values.toSet()),
                     const ManualMarker(),
+                    const BtnVisitedHouse(),
                   ],
                 ),
               );

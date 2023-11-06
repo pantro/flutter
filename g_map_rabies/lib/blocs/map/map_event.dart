@@ -18,6 +18,11 @@ class OnStartFollowingUserMap extends MapEvent {}
 class OnAddHouseMap extends MapEvent {}
 class OnBackHouseMap extends MapEvent {}
 
+class OnShowVisitedHouseMap extends MapEvent {}
+class OnHideVisitedHouseMap extends MapEvent {}
+
+class OnChangeColorMarker extends MapEvent {}
+
 class OnShowMarkersMap extends MapEvent {
   
   final Map<String, Marker> markers;

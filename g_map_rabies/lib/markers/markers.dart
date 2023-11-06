@@ -1,0 +1,1 @@
+export 'package:mapas_app/markers/house_marker.dart';
