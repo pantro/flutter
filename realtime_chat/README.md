@@ -7,3 +7,4 @@ A new Flutter project.
 
 ## Commit
 - "REALTIME_CHAT: disenio pagina login y register"
+- "REALTIME_CHAT: disenio pagina usuarios"
