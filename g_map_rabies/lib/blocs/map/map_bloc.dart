@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mapas_app/blocs/blocs.dart';
 import 'package:mapas_app/helpers/helpers.dart';
@@ -32,8 +33,8 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     on<OnBackHouseMap>(
         (event, emit) => emit(state.copyWith(showAddHouse: false)));
 
-    on<OnShowVisitedHouseMap>(
-        (event, emit) => emit(state.copyWith(showVisitedHouse: true, showAddHouse: false)));
+    on<OnShowVisitedHouseMap>((event, emit) =>
+        emit(state.copyWith(showVisitedHouse: true, showAddHouse: false)));
     on<OnHideVisitedHouseMap>(
         (event, emit) => emit(state.copyWith(showVisitedHouse: false)));
 
@@ -57,7 +58,27 @@ class MapBloc extends Bloc<MapEvent, MapState> {
 
     _mapController!.setMapStyle(jsonEncode(uberMapTheme));
 
+    // Read csv
+    _readCsvMarker();
+
     emit(state.copyWith(isMapInitialized: true));
+  }
+
+  void _readCsvMarker() async {
+    final String csvData = await rootBundle.loadString('assets/file.csv');
+    
+    final rows = csvData.split("\n");
+    List colums;
+    double latitude;
+    double longitude;
+    String unicode;
+    for (var i = 1; i < rows.length - 1; i++) {
+      colums = rows[i].split(";");
+      unicode = colums[0].toString();
+      latitude = double.parse(colums[5].toString());
+      longitude = double.parse(colums[6].toString());
+      drawMarkers(LatLng(latitude, longitude), unicode);
+    }
   }
 
   void _onStartFollowingUser(
@@ -69,16 +90,14 @@ class MapBloc extends Bloc<MapEvent, MapState> {
   }
 
   void _onChangeColorMarker(OnChangeColorMarker event, Emitter<MapState> emit) {
-    
     if (state.colorMarker == Colors.red) {
       emit(state.copyWith(colorMarker: Colors.yellow));
     } else if (state.colorMarker == Colors.yellow) {
       emit(state.copyWith(colorMarker: Colors.green));
     }
-    
+
     updateMarkers();
     add(OnHideVisitedHouseMap());
-    
   }
 
   void moveCamera(LatLng newLocation) {
@@ -86,13 +105,19 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     _mapController?.animateCamera(cameraUpdate);
   }
 
-  Future drawMarkers(LatLng position) async {
-    final newId = state.markers.length;
+  Future drawMarkers(LatLng position, [String id = '']) async {
+    String newId;
+
+    if (id == '') {
+      newId = 'ID_${state.markers.length}';
+    } else {
+      newId = id;
+    }
 
     final iconMarker = await getCustomMarker(state.colorMarker);
 
     final marker = Marker(
-        markerId: MarkerId('ID_$newId'),
+        markerId: MarkerId(newId),
         position: position,
         icon: iconMarker,
         infoWindow: InfoWindow(
@@ -114,18 +139,18 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     final currentMarkers = Map<String, Marker>.from(state.markers);
     currentMarkers.forEach((key, value) {
       final markerUpdate = Marker(
-        markerId: value.markerId,
-        position: value.position,
-        icon: iconMarker,
-        infoWindow: InfoWindow(
-          title: key,
-        ),
-        onTap: () {
-          add(OnShowVisitedHouseMap());
-        });
-        currentMarkers[key] = markerUpdate;
+          markerId: value.markerId,
+          position: value.position,
+          icon: iconMarker,
+          infoWindow: InfoWindow(
+            title: key,
+          ),
+          onTap: () {
+            add(OnShowVisitedHouseMap());
+          });
+      currentMarkers[key] = markerUpdate;
     });
-    
+
     add(OnShowMarkersMap(currentMarkers));
   }
 
