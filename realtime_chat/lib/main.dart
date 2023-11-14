@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      initialRoute: 'usuarios',
+      initialRoute: 'chat',
       routes: appRoutes,
     );
   }
