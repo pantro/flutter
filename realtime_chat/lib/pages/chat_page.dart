@@ -9,10 +9,10 @@ class ChatPage extends StatefulWidget {
   const ChatPage({super.key});
   
   @override
-  _ChatPageState createState() => _ChatPageState();
+  ChatPageState createState() => ChatPageState();
 }
 
-class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
+class ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
 
   final _textController = TextEditingController();
   final _focusNode = FocusNode();
@@ -135,15 +135,15 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
     setState(() {
       _estaEscribiendo = false;
     });
+  }
 
-    //Para limpiar el animation
-    @override
-    void dispose() {
-      for(ChatMessage message in _messages) {
-        message.animationController.dispose();
-      }
-
-      super.dispose();
+  //Para limpiar el animation
+  @override
+  void dispose() {
+    for(ChatMessage message in _messages) {
+      message.animationController.dispose();
     }
+
+    super.dispose();
   }
 }
