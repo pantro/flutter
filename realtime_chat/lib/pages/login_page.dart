@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:realtime_chat/helpers/mostrar_alerta.dart';
 import 'package:realtime_chat/services/auth_service.dart';
+import 'package:realtime_chat/services/socket_service.dart';
 import 'package:realtime_chat/widgets/widgets.dart';
 
 class LoginPage extends StatelessWidget {
@@ -47,6 +48,7 @@ class __FormState extends State<_Form> {
   Widget build(BuildContext context) {
 
     final authService = Provider.of<AuthService>(context);
+    final socketService = Provider.of<SocketService>(context);
 
     return Container(
       margin: const EdgeInsets.only(top: 40),
@@ -73,7 +75,9 @@ class __FormState extends State<_Form> {
               final loginOk = await authService.login(emailCtrl.text.trim(), passCtrl.text.trim());// El trim() se asegura que no haya espacios en blanco
 
               if ( loginOk ) {
-                // TO DO conectar socket
+                
+                socketService.connect();
+
                 if (!context.mounted) return debugPrint("El context aun no se a montado");
                 Navigator.pushReplacementNamed(context, 'usuarios');
               } else {

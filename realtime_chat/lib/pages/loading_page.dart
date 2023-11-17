@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:realtime_chat/pages/login_page.dart';
 import 'package:realtime_chat/pages/usuarios_page.dart';
 import 'package:realtime_chat/services/auth_service.dart';
+import 'package:realtime_chat/services/socket_service.dart';
 
 class LoadingPage extends StatelessWidget {
 
@@ -27,10 +28,16 @@ class LoadingPage extends StatelessWidget {
     final authService = Provider.of<AuthService>(context, listen: false); //Listen false por que no necesito redibujar nada
     
     final autenticado = await authService.isLoggedIn();
+
+    if (!context.mounted) return debugPrint("El context aun no se a montado");
+    final socketService = Provider.of<SocketService>(context, listen: false);
     
     if (!context.mounted) return debugPrint("El context aun no se a montado");
     
     if (autenticado) {
+
+      socketService.connect();
+
       // Se hizo de esta forma para que tenga una transicion mas rapida
       Navigator.pushReplacement(
         context, 
