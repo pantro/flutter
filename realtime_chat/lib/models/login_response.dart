@@ -17,15 +17,18 @@ class LoginResponse {
         required this.token,
     });
 
-    factory LoginResponse.fromJson(Map<String, dynamic> json) => LoginResponse(
+    factory LoginResponse.fromJson(Map<String, dynamic> json) {
+
+      return LoginResponse(
         ok: json["ok"],
         usuario: Usuario.fromJson(json["usuario"]),
         token: json["token"],
-    );
+      );
+    }
 
     Map<String, dynamic> toJson() => {
         "ok": ok,
-        "usuario": usuario.toJson(),
+        //"usuario": usuario.toJson(),
         "token": token,
     };
 }

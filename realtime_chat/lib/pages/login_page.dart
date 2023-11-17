@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:realtime_chat/helpers/mostrar_alerta.dart';
 import 'package:realtime_chat/services/auth_service.dart';
 import 'package:realtime_chat/widgets/widgets.dart';
 
@@ -44,6 +45,9 @@ class __FormState extends State<_Form> {
 
   @override
   Widget build(BuildContext context) {
+
+    final authService = Provider.of<AuthService>(context);
+
     return Container(
       margin: const EdgeInsets.only(top: 40),
       padding: const EdgeInsets.symmetric(horizontal: 50),
@@ -63,9 +67,19 @@ class __FormState extends State<_Form> {
           ),
           Button(
             text: 'Ingrese a mi',
-            onPressed: () {
-              final authService = Provider.of<AuthService>(context, listen: false);
-              authService.login(emailCtrl.text, passCtrl.text);
+            onPressed: authService.autenticando ? null : () async {
+              FocusScope.of(context).unfocus(); // Desaparecera el teclado cuando se presiona el boton
+              
+              final loginOk = await authService.login(emailCtrl.text.trim(), passCtrl.text.trim());// El trim() se asegura que no haya espacios en blanco
+
+              if ( loginOk ) {
+                // TO DO conectar socket
+                if (!context.mounted) return debugPrint("El context aun no se a montado");
+                Navigator.pushReplacementNamed(context, 'usuarios');
+              } else {
+                if (!context.mounted) return debugPrint("El context aun no se a montado");
+                mostrarAlerta(context, 'Login incorrecto', 'Revise sus credenciales nuevamente');
+              }
             },
           )
         ],
