@@ -11,3 +11,4 @@ A new Flutter project.
 - "REALTIME_CHAT: terminadas pantallas de frontend"
 - "REALTIME_CHAT: Para los estados se empieza a aplicar providers, se almacena el usuario haciendo consultas al backend"
 - "REALTIME_CHAT: Terminada logica de registrar usuario"
+- "REALTIME_CHAT: Mantener pantalla si tenemos token valido"
