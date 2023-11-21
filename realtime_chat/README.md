@@ -14,3 +14,4 @@ A new Flutter project.
 - "REALTIME_CHAT: Mantener pantalla si tenemos token valido"
 - "REALTIME_CHAT: V1.0, hasta aqui puede ser un codigo general de una aplicacion cualquiera"
 - "REALTIME_CHAT: login y conectado o no conectado mediante backend"
+- "REALTIME_CHAT: mostrar listado de usuarios"
