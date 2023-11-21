@@ -15,3 +15,4 @@ A new Flutter project.
 - "REALTIME_CHAT: V1.0, hasta aqui puede ser un codigo general de una aplicacion cualquiera"
 - "REALTIME_CHAT: login y conectado o no conectado mediante backend"
 - "REALTIME_CHAT: mostrar listado de usuarios"
+- "REALTIME_CHAT( FIN ): Crear salas de chat"

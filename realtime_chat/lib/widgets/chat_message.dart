@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:realtime_chat/services/auth_service.dart';
 
 class ChatMessage extends StatelessWidget {
-
   final String texto;
   final String uid;
   final AnimationController animationController;
@@ -11,24 +12,25 @@ class ChatMessage extends StatelessWidget {
     required this.texto,
     required this.uid,
     required this.animationController,
-  }):super(key: key);
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final authService = Provider.of<AuthService>(context, listen: false);
+
     return FadeTransition(
       opacity: animationController,
       child: SizeTransition(
-        sizeFactor: CurvedAnimation(parent: animationController, curve: Curves.easeOut),
+        sizeFactor:
+            CurvedAnimation(parent: animationController, curve: Curves.easeOut),
         child: Container(
-          child: uid == '123'
-            ? _myMessage()
-            : _notMyMessage(),
+          child: uid == authService.usuario!.uid ? _myMessage() : _notMyMessage(),
         ),
       ),
     );
   }
 
-  Widget _myMessage(){
+  Widget _myMessage() {
     return Align(
       alignment: Alignment.centerRight,
       child: Container(
@@ -47,12 +49,15 @@ class ChatMessage extends StatelessWidget {
           color: const Color(0xff4D9EF6),
           borderRadius: BorderRadius.circular(20),
         ),
-        child: Text(texto, style: const TextStyle(color: Colors.white),),
+        child: Text(
+          texto,
+          style: const TextStyle(color: Colors.white),
+        ),
       ),
     );
   }
 
-  Widget _notMyMessage(){
+  Widget _notMyMessage() {
     return Align(
       alignment: Alignment.centerLeft,
       child: Container(
