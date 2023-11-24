@@ -29,3 +29,6 @@ A new Flutter project.
 - G_MAP_RABIES: Colocar muchos marcadores.
 - G_MAP_RABIES(v1.0): Generar un diseño de marcador personalizado, marcadores cambian de color.
 - G_MAP_RABIES: Leer csv y mostrarlo en pantalla.
+- G_MAP_RABIES: Ubicar el mapa en el centro de los puntos.
+* G_MAP_RABIES: Agrupar por cuadras
+* G_MAP_RABIES: Hacer clic en las casas

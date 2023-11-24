@@ -44,7 +44,8 @@ class MapBloc extends Bloc<MapEvent, MapState> {
         (event, emit) => emit(state.copyWith(markers: event.markers)));
 
     locationStateSubscription = locationBloc.stream.listen((locationState) {
-      if (!state.isFollowingUser) return; // SI no se sigue al usuario aqui no se hace nada
+      if (!state.isFollowingUser)
+        return; // SI no se sigue al usuario aqui no se hace nada
 
       if (locationState.lastKnownLocation == null) return;
 
@@ -66,19 +67,29 @@ class MapBloc extends Bloc<MapEvent, MapState> {
 
   void _readCsvMarker() async {
     final String csvData = await rootBundle.loadString('assets/file.csv');
-    
+
     final rows = csvData.split("\n");
     List colums;
     double latitude;
     double longitude;
+    double sumLatitude = 0;
+    double sumLongitude = 0;
     String unicode;
     for (var i = 1; i < rows.length - 1; i++) {
-      colums = rows[i].split(";");
+      colums = rows[i].split(",");
       unicode = colums[0].toString();
       latitude = double.parse(colums[5].toString());
       longitude = double.parse(colums[6].toString());
+      sumLatitude = sumLatitude + latitude;
+      sumLongitude = sumLongitude + longitude;
       drawMarkers(LatLng(latitude, longitude), unicode);
     }
+    //
+    LatLng centerCsv =
+        LatLng(sumLatitude / (rows.length-2), sumLongitude / (rows.length-2));
+    print('Se ejecuta OnCenterCsvEvent: $centerCsv');
+    locationBloc.add(OnNewUserLocationEvent(centerCsv));
+    locationBloc.stopFollowingUser();
   }
 
   void _onStartFollowingUser(
