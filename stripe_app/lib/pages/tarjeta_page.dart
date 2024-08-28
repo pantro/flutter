@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:stripe_app/bloc/pagar/pagar_bloc.dart';
 import 'package:stripe_app/models/tarjeta_credito.dart';
 import 'package:stripe_app/widgets/total_pago_button.dart';
 
@@ -20,6 +23,13 @@ class TarjetaPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Regresar a Pagar'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            context.read<PagarBloc>().add( OnDesactivarTarjeta() );//Otra forma de acceder a los bloc
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: Stack(
         children: [
